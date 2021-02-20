@@ -7,6 +7,14 @@
     android:layout_marginHorizontal="50dp"
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_notification"
+        android:gravity="center"
+        android:scrollbarSize="35dp"
+        android:layout_marginBottom="25dp"/>
+
     <Button
         android:id="@+id/bt_request_token"
         android:layout_width="match_parent"
