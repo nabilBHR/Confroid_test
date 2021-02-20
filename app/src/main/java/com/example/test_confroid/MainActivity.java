@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     private final int REQUEST_TOKEN_CODE = 123;
-    private TextView tv_notfication;
+    private TextView tv_notification;
     private String token;
     private SharedPreferences prefs;
 
@@ -20,33 +20,44 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tv_notification = findViewById(R.id.tv_notification);
         Button bt_request_token = findViewById(R.id.bt_request_token);
-        tv_notfication = findViewById(R.id.tv_notification);
+        Button bt_create_configuration = findViewById(R.id.bt_create_configuartion);
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         if (prefs != null) {
             token = prefs.getString("TOKEN", "");
         }
 
+        Intent intentAddConfig = getIntent();
+        if (intentAddConfig != null) {
+            tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
+            tv_notification.setTextColor(getResources().getColor(R.color.green));
+        }
+
         bt_request_token.setOnClickListener(arg0 -> {
 
             // pour le test
-            // token = "";
+            //token = "";
             // A enlever !!!!!!!!!!!!!!!!!!!!!!!!!
 
             if (!token.equals("")) {
-                tv_notfication.setText("Vous avez déja un token !");
-                tv_notfication.setTextColor(getResources().getColor(R.color.red));
+                tv_notification.setText(getResources().getString(R.string.already_have_token));
+                tv_notification.setTextColor(getResources().getColor(R.color.red));
             } else {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hello from test App");
-                sendIntent.putExtra("intent_type", "first_intent_request_token");
-                sendIntent.putExtra("app_name", "test_confroid");
+                sendIntent.putExtra("intent_type", getResources().getString(R.string.token_request_intent_type));
+                sendIntent.putExtra("app_name", getResources().getString(R.string.app_name));
                 sendIntent.setType("text/plain");
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivityForResult(shareIntent, REQUEST_TOKEN_CODE);
             }
+        });
+
+        bt_create_configuration.setOnClickListener(arg0 -> {
+            Intent intent = new Intent(this, AddConfigurationActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -60,8 +71,8 @@ public class MainActivity extends Activity {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("TOKEN", tokenRequestResultIntent.getStringExtra("TOKEN"));
                 editor.apply();
-                tv_notfication.setText("Un token a été créé pour cette application !");
-                tv_notfication.setTextColor(getResources().getColor(R.color.green));
+                tv_notification.setText(getResources().getString(R.string.token_creation_succes));
+                tv_notification.setTextColor(getResources().getColor(R.color.green));
 
                 Toast.makeText(this, "Mon Token est " + tokenRequestResultIntent.getStringExtra("TOKEN"), Toast.LENGTH_LONG).show();
             }
