@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +11,6 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     private final int REQUEST_TOKEN_CODE = 123;
-    private Button bt_request_token;
     private TextView tv_notfication;
     private String token;
     private SharedPreferences prefs;
@@ -23,7 +20,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bt_request_token = findViewById(R.id.bt_request_token);
+        Button bt_request_token = findViewById(R.id.bt_request_token);
         tv_notfication = findViewById(R.id.tv_notification);
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -31,27 +28,24 @@ public class MainActivity extends Activity {
             token = prefs.getString("TOKEN", "");
         }
 
-        bt_request_token.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+        bt_request_token.setOnClickListener(arg0 -> {
 
-                // pour le test
-                // token = "";
-                // A enlever !!!!!!!!!!!!!!!!!!!!!!!!!
+            // pour le test
+            // token = "";
+            // A enlever !!!!!!!!!!!!!!!!!!!!!!!!!
 
-                if (!token.equals("")) {
-                    tv_notfication.setText("Vous avez déja un token !");
-                    tv_notfication.setTextColor(getResources().getColor(R.color.red));
-                } else {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hello from test App");
-                    sendIntent.putExtra("intent_type", "first_intent_request_token");
-                    sendIntent.putExtra("app_name", "test_confroid");
-                    sendIntent.setType("text/plain");
-                    Intent shareIntent = Intent.createChooser(sendIntent, null);
-                    startActivityForResult(shareIntent, REQUEST_TOKEN_CODE);
-                }
+            if (!token.equals("")) {
+                tv_notfication.setText("Vous avez déja un token !");
+                tv_notfication.setTextColor(getResources().getColor(R.color.red));
+            } else {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hello from test App");
+                sendIntent.putExtra("intent_type", "first_intent_request_token");
+                sendIntent.putExtra("app_name", "test_confroid");
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivityForResult(shareIntent, REQUEST_TOKEN_CODE);
             }
         });
     }
