@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Test_Confroid</string>
+    <string name="added_configuration">Configuration ajoutée !</string>
+    <string name="already_have_token">Vous avez déja un token !</string>
+    <string name="token_request_intent_type">first_intent_request_token</string>
+    <string name="token_creation_succes">Un token a été créé pour cette application !</string>
 </resources>
