@@ -21,6 +21,14 @@
         android:text="Demander un Token" />
 
     <Button
+        android:id="@+id/bt_show_token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="voir mon token"
+        android:visibility="gone"
+        />
+
+    <Button
         android:id="@+id/bt_create_configuartion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
