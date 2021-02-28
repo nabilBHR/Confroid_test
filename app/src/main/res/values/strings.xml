@@ -2,6 +2,10 @@
     <string name="app_name">Test_Confroid</string>
     <string name="added_configuration">Configuration ajoutée !</string>
     <string name="already_have_token">Vous avez déja un token !</string>
+    <string name="dont_have_token_yet">Veuillez demander un token avant!</string>
     <string name="token_request_intent_type">first_intent_request_token</string>
+    <string name="configuration_send_intent_type">configuration_intent</string>
     <string name="token_creation_succes">Un token a été créé pour cette application !</string>
+    <string name="configuration_sent_succes">Votre configuration a été envoyée a Confroid !</string>
+    <string name="show_token_message">Votre token est : </string>
 </resources>

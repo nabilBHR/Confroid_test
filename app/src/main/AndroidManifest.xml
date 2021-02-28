@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test_Confroid">
-        <activity android:name=".AddConfigurationActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.ConfigurationsListActivityBaseActivity"></activity>
+        <activity android:name=".ui.DataShareBaseActivity" />
+        <activity android:name=".ui.AddConfigurationActivityBaseActivity" />
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
