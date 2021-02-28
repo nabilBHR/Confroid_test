@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import com.example.test_confroid.R;
 import com.google.gson.Gson;
 
-public class AddConfigurationActivityBaseActivity extends DataShareBaseActivity {
+public class AddConfigurationActivity extends DataShareBaseActivity {
 
     private int line = 0;
     private EditText et_last_key = null;

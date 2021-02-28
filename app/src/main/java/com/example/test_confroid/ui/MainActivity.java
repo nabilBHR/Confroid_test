@@ -81,13 +81,13 @@ public class MainActivity extends DataShareBaseActivity {
                 tv_notification.setText(getResources().getString(R.string.dont_have_token_yet));
                 tv_notification.setTextColor(getResources().getColor(R.color.red));
             } else {
-                Intent intent = new Intent(this, AddConfigurationActivityBaseActivity.class);
+                Intent intent = new Intent(this, AddConfigurationActivity.class);
                 startActivity(intent);
             }
         });
 
         bt_display_configurations.setOnClickListener(arg0 -> {
-            Intent configsList = new Intent(this, ConfigurationsListActivityBaseActivity.class);
+            Intent configsList = new Intent(this, ConfigurationsListActivity.class);
             startActivity(configsList);
         });
     }
