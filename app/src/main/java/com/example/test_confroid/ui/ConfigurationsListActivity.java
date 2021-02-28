@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import java.util.Map;
 
-public class ConfigurationsListActivityBaseActivity extends DataShareBaseActivity {
+public class ConfigurationsListActivity extends DataShareBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class ConfigurationsListActivityBaseActivity extends DataShareBaseActivit
                     sendIntent.putExtra("app_name", getResources().getString(R.string.app_name));
                     updateSentField(map.get("configName"), "T");
                     Bundle config = Utils.convertToBundle(map);
+                    config.putString("TOKEN", token);
                     sendIntent.putExtra("CONFIG", config);
                     sendIntent.setType("text/plain");
                     Intent shareIntent = Intent.createChooser(sendIntent, null);
