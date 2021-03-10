@@ -16,7 +16,7 @@ public class DataShareBaseActivity extends AppCompatActivity {
     protected final static int SEND_CONFIGURATION_CODE = 124;
     protected static String token;
     protected static SharedPreferences prefs;
-    protected static Map<String, Object> actualConfigurationMap = new HashMap<>();
+    protected static Map<String, String> actualConfigurationMap = new HashMap<>();
     protected static List<String> configurations = new ArrayList<>();
     protected static List<Map<String, String>> configurationsMaps = new ArrayList<>();
 

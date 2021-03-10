@@ -32,13 +32,18 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
 
             TextView tv_config_name = new TextView(this);
             tv_config_name.setText(map.get("configName"));
-            tv_config_name.setLayoutParams(new LinearLayout.LayoutParams(250, LinearLayout.LayoutParams.WRAP_CONTENT));
+            tv_config_name.setLayoutParams(new LinearLayout.LayoutParams(100, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(tv_config_name);
 
             Button bt_set_tag = new Button(this);
             bt_set_tag.setText("TAG");
             bt_set_tag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(bt_set_tag);
+
+            Button bt_set_current = new Button(this);
+            bt_set_current.setText("Definir");
+            bt_set_current.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            layout.addView(bt_set_current);
 
             Button bt_send_conf = new Button(this);
             bt_send_conf.setText("Envoyer");
@@ -68,6 +73,16 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
 
             bt_set_tag.setOnClickListener(arg1 -> showTagDialog(map.get("configName")));
 
+            bt_set_current.setOnClickListener(arg1 -> {
+                actualConfigurationMap = map;
+                prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                String configurationSave = new Gson().toJson(actualConfigurationMap);
+                editor.putString("actualConfig", configurationSave);
+                editor.apply();
+                Toast.makeText(this, "Définie comme configuration actuelle !", Toast.LENGTH_LONG).show();
+
+            });
         }
     }
 

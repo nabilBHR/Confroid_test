@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import com.example.test_confroid.R;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddConfigurationActivity extends DataShareBaseActivity {
 
     private int line = 0;
@@ -19,6 +22,7 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
     private EditText et_config_name = null;
     private Button bt_save = null;
     private LinearLayout l_add_config;
+    private Map<String, String> addedConfigMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
             if (line == 0) {
                 addNewLine();
             } else if (!et_last_key.getText().toString().equals("") && !et_last_value.getText().toString().equals("")) {
-                actualConfigurationMap.put(et_last_key.getText().toString(), et_last_value.getText().toString());
+                addedConfigMap.put(et_last_key.getText().toString(), et_last_value.getText().toString());
                 et_last_key.setEnabled(false);
                 et_last_value.setEnabled(false);
                 addNewLine();
@@ -42,12 +46,12 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
 
         bt_validate.setOnClickListener(arg0 -> {
             if (!et_last_key.getText().toString().equals("") && !et_last_value.getText().toString().equals("")) {
-                actualConfigurationMap.put(et_last_key.getText().toString(), et_last_value.getText().toString());
+                addedConfigMap.put(et_last_key.getText().toString(), et_last_value.getText().toString());
                 addConfigurationName();
                 bt_save.setOnClickListener(arg1 -> {
                     if (!et_config_name.getText().toString().equals("")) {
-                        actualConfigurationMap.put("configName", getApplicationContext().getPackageName() + "." + et_config_name.getText().toString());
-                        String configuration = new Gson().toJson(actualConfigurationMap);
+                        addedConfigMap.put("configName", getApplicationContext().getPackageName() + "." + et_config_name.getText().toString());
+                        String configuration = new Gson().toJson(addedConfigMap);
                         configurations.add(configuration);
                         String configListSave = TextUtils.join("|", configurations);
 
