@@ -28,6 +28,7 @@ public class MainActivity extends DataShareBaseActivity {
         Button bt_create_configuration = findViewById(R.id.bt_create_configuartion);
         Button bt_display_configurations = findViewById(R.id.bt_display_configurations);
 
+        Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         if (prefs != null) {
             token = prefs.getString("TOKEN", "");
@@ -89,6 +90,16 @@ public class MainActivity extends DataShareBaseActivity {
         bt_display_configurations.setOnClickListener(arg0 -> {
             Intent configsList = new Intent(this, ConfigurationsListActivity.class);
             startActivity(configsList);
+        });
+
+        bt_show_configuartion.setOnClickListener(arg0 -> {
+            if (token.equals("")) {
+                tv_notification.setText(getResources().getString(R.string.dont_have_token_yet));
+                tv_notification.setTextColor(getResources().getColor(R.color.red));
+            } else {
+                Intent showActualConfig = new Intent(this, DisplayConfigurationActivity.class);
+                startActivity(showActualConfig);
+            }
         });
     }
 

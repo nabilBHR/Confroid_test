@@ -29,6 +29,12 @@
         />
 
     <Button
+        android:id="@+id/bt_show_configuartion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Configuration actuelle" />
+
+    <Button
         android:id="@+id/bt_create_configuartion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,12 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mes configurations" />
-
-    <Button
-        android:id="@+id/bt_edit_last"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Modifeir ma configuration actuelle" />
 
 </LinearLayout>
 
