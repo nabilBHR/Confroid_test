@@ -29,12 +29,11 @@ public class TokenPuller extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        //throw new UnsupportedOperationException("Not yet implemented");
         return null;
     }
 
     public static void pullToken(Context context) {
+        Log.d("token puller:","pull token");
         Intent intent = new Intent("GET_TOKEN");
         intent.putExtra("receiver", "com.example.test_confroid.services.TokenPuller");
         intent.putExtra("name", context.getPackageName());

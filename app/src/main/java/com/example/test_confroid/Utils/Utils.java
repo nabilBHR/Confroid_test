@@ -17,7 +17,7 @@ public class Utils {
         return bundle;
     }
 
-    public static String convertToJsonString(Map<String, String> configuration) {
+    public static String getJsonString(Map<String, String> configuration) {
         JSONObject json = new JSONObject();
         for (Map.Entry<String, String> entry : configuration.entrySet()) {
             try {
