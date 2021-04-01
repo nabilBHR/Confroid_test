@@ -62,6 +62,7 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
 
                         Intent intent = new Intent(this, MainActivity.class);
                         intent.putExtra("AddedConfig", getResources().getString(R.string.added_configuration));
+                        intent.putExtra("intent_type", getResources().getString(R.string.add_configuration_result_intent));
                         startActivity(intent);
                     }
                 });

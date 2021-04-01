@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test_Confroid">
-        <activity android:name=".ui.DisplayConfigurationActivity"></activity>
+        <activity android:name=".ui.ShowTokenActivity"></activity>
+        <activity android:name=".ui.DisplayConfigurationActivity" />
         <activity android:name=".ui.ConfigurationsListActivity" />
         <activity android:name=".ui.DataShareBaseActivity" />
         <activity android:name=".ui.AddConfigurationActivity" />
