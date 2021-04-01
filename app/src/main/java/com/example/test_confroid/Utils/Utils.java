@@ -21,11 +21,13 @@ public class Utils {
         JSONObject json = new JSONObject();
         for (Map.Entry<String, String> entry : configuration.entrySet()) {
             try {
-                json.put(entry.getKey(), entry.getValue());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                    json.put(entry.getKey(), entry.getValue());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
         }
+
+
         return json.toString();
     }
 }

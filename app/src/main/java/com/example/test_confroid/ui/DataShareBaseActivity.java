@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class DataShareBaseActivity extends AppCompatActivity {
 
+    public final static String confroid = "com.example.confroid_project";
+    public final static String servicePusher = "com.example.confroid_project.services.ConfigurationPusher";
+
+
     protected static final int REQUEST_TOKEN_CODE = 123;
     protected final static int SEND_CONFIGURATION_CODE = 124;
     protected static String token;
