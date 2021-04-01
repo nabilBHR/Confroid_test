@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.apg.mobile.roundtextview.RoundTextView;
 import com.example.test_confroid.R;
@@ -32,13 +33,19 @@ public class MainActivity extends DataShareBaseActivity {
         Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        if (prefs != null) {
+        //*****************************************************
+        token = prefs.getString("TOKEN", "");
+        String configurationsStr = prefs.getString("CONFIGS", "");
+        Boolean emptyPref = token.equals("") || configurationsStr.equals("");
+        Log.d("prefs ok", String.valueOf(emptyPref));
+        //*****************************************************
+        if (!emptyPref) {
             Log.d("PREFERENCE","OKEEEEEEEEEEEEY");
             token = prefs.getString("TOKEN", "");
-
+            Log.d("token",token);
             configurationsMaps = new ArrayList<>();
             configurations = new ArrayList<>();
-            String configurationsStr = prefs.getString("CONFIGS", "");
+            configurationsStr = prefs.getString("CONFIGS", "");
             if (!configurationsStr.equals("")) {
                 String[] configurationsTab = configurationsStr.split("\\|");
                 for (String s : configurationsTab) {
@@ -49,13 +56,21 @@ public class MainActivity extends DataShareBaseActivity {
                     configurations.add(new Gson().toJson(map));
                 }
             }
+         //********* pull a token *******************
+        }else {
+            Log.d("no token", "pulling the token");
+            TokenPuller.pullToken(this.getApplicationContext());
+            Toast.makeText(this, TokenPuller.getToken(), Toast.LENGTH_LONG).show();
+            Log.d("token_main", " " + TokenPuller.getToken());
         }
-
+        //*******************************************
+/**
         Intent intentAddConfig = getIntent();
         if (intentAddConfig != null && intentAddConfig.getAction().equals(Intent.ACTION_SEND)) {
             tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
             tv_notification.setBgColor(getResources().getColor(R.color.green));
         }
+*/
 
         bt_request_token.setOnClickListener(arg0 -> {
             if (!token.equals("")) {
@@ -142,4 +157,10 @@ public class MainActivity extends DataShareBaseActivity {
         }
 
     }*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }
