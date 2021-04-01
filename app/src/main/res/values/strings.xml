@@ -8,4 +8,5 @@
     <string name="token_creation_succes">Un token a été créé pour cette application !</string>
     <string name="configuration_sent_succes">Votre configuration a été envoyée a Confroid !</string>
     <string name="show_token_message">Votre token est : </string>
+    <string name="add_configuration_result_intent">add_configuration</string>
 </resources>

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.apg.mobile.roundtextview.RoundTextView;
 import com.example.test_confroid.R;
@@ -50,9 +49,11 @@ public class MainActivity extends DataShareBaseActivity {
         }
 
         Intent intentAddConfig = getIntent();
-        if (intentAddConfig != null && intentAddConfig.getAction().equals(Intent.ACTION_SEND)) {
-            tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
-            tv_notification.setBgColor(getResources().getColor(R.color.green));
+        if (intentAddConfig != null && intentAddConfig.getStringExtra("intent_type") != null) {
+            if (intentAddConfig.getStringExtra("intent_type").equals(getResources().getString(R.string.add_configuration_result_intent))) {
+                tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
         }
 
         bt_request_token.setOnClickListener(arg0 -> {
@@ -63,8 +64,8 @@ public class MainActivity extends DataShareBaseActivity {
                 bt_show_token.setVisibility(View.VISIBLE);
                 bt_request_token.setVisibility(View.GONE);
                 bt_show_token.setOnClickListener(arg1 -> {
-                    tv_notification.setText(getResources().getString(R.string.show_token_message) + " " + token);
-                    tv_notification.setBgColor(getResources().getColor(R.color.green));
+                    Intent intent = new Intent(this, ShowTokenActivity.class);
+                    startActivity(intent);
                 });
             } else {
                 Intent sendIntent = new Intent();
@@ -118,8 +119,6 @@ public class MainActivity extends DataShareBaseActivity {
                 editor.apply();
                 tv_notification.setText(getResources().getString(R.string.token_creation_succes));
                 tv_notification.setBgColor(getResources().getColor(R.color.green));
-                //AS
-                //Toast.makeText(this, "Mon Token est " + tokenRequestResultIntent.getStringExtra("TOKEN"), Toast.LENGTH_LONG).show();
             }
         }
 
