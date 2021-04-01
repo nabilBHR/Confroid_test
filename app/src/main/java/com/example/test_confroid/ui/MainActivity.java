@@ -64,13 +64,12 @@ public class MainActivity extends DataShareBaseActivity {
             Log.d("token_main", " " + TokenPuller.getToken());
         }
         //*******************************************
-/**
+
         Intent intentAddConfig = getIntent();
         if (intentAddConfig != null && intentAddConfig.getAction().equals(Intent.ACTION_SEND)) {
             tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
             tv_notification.setBgColor(getResources().getColor(R.color.green));
         }
-*/
 
         bt_request_token.setOnClickListener(arg0 -> {
             if (!token.equals("")) {
