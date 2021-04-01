@@ -30,6 +30,7 @@ public class MainActivity extends DataShareBaseActivity {
         Button bt_request_token = findViewById(R.id.bt_request_token);
         Button bt_create_configuration = findViewById(R.id.bt_create_configuartion);
         Button bt_display_configurations = findViewById(R.id.bt_display_configurations);
+
         Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -42,7 +43,7 @@ public class MainActivity extends DataShareBaseActivity {
         if (!emptyPref) {
             Log.d("PREFERENCE","OKEEEEEEEEEEEEY");
             token = prefs.getString("TOKEN", "");
-            Log.d("token",token);
+
             configurationsMaps = new ArrayList<>();
             configurations = new ArrayList<>();
             configurationsStr = prefs.getString("CONFIGS", "");
@@ -66,9 +67,11 @@ public class MainActivity extends DataShareBaseActivity {
         //*******************************************
 
         Intent intentAddConfig = getIntent();
-        if (intentAddConfig != null && intentAddConfig.getAction().equals(Intent.ACTION_SEND)) {
-            tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
-            tv_notification.setBgColor(getResources().getColor(R.color.green));
+        if (intentAddConfig != null && intentAddConfig.getStringExtra("intent_type") != null) {
+            if (intentAddConfig.getStringExtra("intent_type").equals(getResources().getString(R.string.add_configuration_result_intent))) {
+                tv_notification.setText(intentAddConfig.getStringExtra("AddedConfig"));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
         }
 
         bt_request_token.setOnClickListener(arg0 -> {
@@ -79,8 +82,8 @@ public class MainActivity extends DataShareBaseActivity {
                 bt_show_token.setVisibility(View.VISIBLE);
                 bt_request_token.setVisibility(View.GONE);
                 bt_show_token.setOnClickListener(arg1 -> {
-                    tv_notification.setText(getResources().getString(R.string.show_token_message) + " " + token);
-                    tv_notification.setBgColor(getResources().getColor(R.color.green));
+                    Intent intent = new Intent(this, ShowTokenActivity.class);
+                    startActivity(intent);
                 });
             } else {
                 /**Intent sendIntent = new Intent();
