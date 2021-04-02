@@ -21,10 +21,6 @@ import java.util.HashMap;
 public class MainActivity extends DataShareBaseActivity {
 
     private RoundTextView tv_notification;
-    private Button bt_request_token;
-    private Button bt_create_configuration;
-    private Button bt_display_configurations;
-    private Button bt_pull_configuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +28,10 @@ public class MainActivity extends DataShareBaseActivity {
         setContentView(R.layout.activity_main);
 
         tv_notification = findViewById(R.id.tv_notification);
-        bt_request_token = findViewById(R.id.bt_request_token);
-        bt_create_configuration = findViewById(R.id.bt_create_configuartion);
-        bt_display_configurations = findViewById(R.id.bt_display_configurations);
-        bt_pull_configuration = findViewById(R.id.bt_pull_configurations);
+        Button bt_request_token = findViewById(R.id.bt_request_token);
+        Button bt_create_configuration = findViewById(R.id.bt_create_configuartion);
+        Button bt_display_configurations = findViewById(R.id.bt_display_configurations);
+        Button bt_get_configuration = findViewById(R.id.bt_get_configuration);
 
         Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
 
@@ -129,22 +125,35 @@ public class MainActivity extends DataShareBaseActivity {
             }
         });
 
-        bt_pull_configuration.setOnClickListener(arg0 -> {
-            Intent intent = new Intent("SERVICE_PULLER");
-            intent.putExtra("token", token);
-            intent.putExtra("name", "com.example.test_confroid.me");
-            intent.putExtra("app_name", this.getPackageName());
-            intent.putExtra("receiver", "com.example.test_confroid.services.ConfigurationPuller");
-            //intent.putExtra("version", 1);
-            intent.putExtra("requestId", REQUEST_ID);
-
-            intent.setClassName(confroid, servicePuller);
-
-            ComponentName c = this.startService(intent);
-            if (c == null)
-                Log.e("faillllll", "failed to start with " + intent);
-            else
-                Log.d("senddd", "");
+        bt_get_configuration.setOnClickListener(arg0 -> {
+            Intent intent = new Intent(this, GetConfigurationActivity.class);
+            startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent tokenRequestResultIntent) {
+        super.onActivityResult(requestCode, resultCode, tokenRequestResultIntent);
+        if (requestCode == REQUEST_TOKEN_CODE) {
+            // On vérifie aussi que l'opération s'est bien déroulée et qu'on a bien recu le token
+            if (resultCode == RESULT_OK) {
+                // on sauvegarde le token dans les shared preferences de l'application
+                token = tokenRequestResultIntent.getStringExtra("TOKEN");
+                prefs = getSharedPreferences("prefs", MODE_PRIVATE); // recupération
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("TOKEN", token);
+                editor.apply();
+                tv_notification.setText(getResources().getString(R.string.token_creation_succes));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
+        }
+
+        if (requestCode == SEND_CONFIGURATION_CODE) {
+            if (resultCode == RESULT_OK) {
+                tv_notification.setText(getResources().getString(R.string.configuration_sent_succes));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
+        }
+
     }
 }

@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test_Confroid">
+        <activity android:name=".ui.GetConfigurationActivity"/>
+        <activity android:name=".ui.ShowTokenActivity" />
 
         <service
             android:name=".services.TokenPuller"
