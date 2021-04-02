@@ -1,6 +1,5 @@
 package com.example.test_confroid.ui;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -134,7 +133,7 @@ public class MainActivity extends DataShareBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent tokenRequestResultIntent) {
         super.onActivityResult(requestCode, resultCode, tokenRequestResultIntent);
-        if (requestCode == REQUEST_TOKEN_CODE) {
+        if (requestCode == 0) { //REQUEST_TOKEN_CODE
             // On vérifie aussi que l'opération s'est bien déroulée et qu'on a bien recu le token
             if (resultCode == RESULT_OK) {
                 // on sauvegarde le token dans les shared preferences de l'application
