@@ -78,6 +78,16 @@
         app:strokeColor="@color/purple_500"
         app:strokeWidth="3dp" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_pull_configurations"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Demander une configuration"
+        app:icon="@drawable/baseline_list_black_18dp"
+        app:strokeColor="@color/purple_500"
+        app:strokeWidth="3dp" />
+
 </LinearLayout>
 
 
