@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test_Confroid">
-        <service
-            android:name=".services.ConfigurationPuller"
-            android:enabled="true"
-            android:exported="true"></service>
+
         <service
             android:name=".services.TokenPuller"
             android:enabled="true"

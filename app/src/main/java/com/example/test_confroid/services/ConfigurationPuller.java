@@ -13,7 +13,7 @@ public class ConfigurationPuller extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         int requestId = intent.getIntExtra("requestId", 0);
         if (requestId == DataShareBaseActivity.REQUEST_ID){
-            String config = intent.getStringExtra("config");
+            String config = intent.getStringExtra("content");
             Log.d("received config",config);
         }else {
             Log.e("received config", "error");

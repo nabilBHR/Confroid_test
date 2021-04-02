@@ -131,11 +131,12 @@ public class MainActivity extends DataShareBaseActivity {
 
         bt_pull_configuration.setOnClickListener(arg0 -> {
             Intent intent = new Intent("SERVICE_PULLER");
-            intent.putExtra("TOKEN", token);
-            intent.putExtra("APP", this.getPackageName());
-            intent.putExtra("DEST", "com.example.test_confroid.services.ConfigurationPuller");
-            intent.putExtra("VERSION", 1);
-            intent.putExtra("REQUEST_ID", REQUEST_ID);
+            intent.putExtra("token", token);
+            intent.putExtra("name", "com.example.test_confroid.me");
+            intent.putExtra("app_name", this.getPackageName());
+            intent.putExtra("receiver", "com.example.test_confroid.services.ConfigurationPuller");
+            //intent.putExtra("version", 1);
+            intent.putExtra("requestId", REQUEST_ID);
 
             intent.setClassName(confroid, servicePuller);
 

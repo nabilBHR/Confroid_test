@@ -62,6 +62,7 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
                     config.putString("JSON", getJsonString(map));
                     config.putString("TOKEN", token);
                     config.putString("APP", this.getPackageName());
+                    config.putString("CONF_NAME", map.get("configName"));
                     //*************************************************
                     Intent sendIntent = new Intent("SERVICE_PUSHER");
                     sendIntent.setClassName(confroid, servicePusher);
