@@ -27,6 +27,7 @@ public class MainActivity extends DataShareBaseActivity {
         Button bt_request_token = findViewById(R.id.bt_request_token);
         Button bt_create_configuration = findViewById(R.id.bt_create_configuartion);
         Button bt_display_configurations = findViewById(R.id.bt_display_configurations);
+        Button bt_get_configuration = findViewById(R.id.bt_get_configuration);
 
         Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -102,6 +103,11 @@ public class MainActivity extends DataShareBaseActivity {
                 Intent showActualConfig = new Intent(this, DisplayConfigurationActivity.class);
                 startActivity(showActualConfig);
             }
+        });
+
+        bt_get_configuration.setOnClickListener(arg0 -> {
+            Intent intent = new Intent(this, GetConfigurationActivity.class);
+            startActivity(intent);
         });
     }
 
