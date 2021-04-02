@@ -91,7 +91,7 @@ public class MainActivity extends DataShareBaseActivity {
         });
 
         bt_display_configurations.setOnClickListener(arg0 -> {
-            Intent configsList = new Intent(this, ConfigurationsListActivity.class);
+            Intent configsList = new Intent(this, ConfigsList.class);
             startActivity(configsList);
         });
 

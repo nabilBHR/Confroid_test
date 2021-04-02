@@ -23,7 +23,7 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurations_list);
-        LinearLayout l_configs_list = findViewById(R.id.l_configs_list);
+        //LinearLayout l_configs_list = findViewById(R.id.);
 
         for (Map<String, String> map : configurationsMaps) {
             LinearLayout layout = new LinearLayout(this);
@@ -50,7 +50,7 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
             bt_send_conf.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(bt_send_conf);
 
-            l_configs_list.addView(layout);
+            //l_configs_list.addView(layout);
 
             bt_send_conf.setOnClickListener(arg0 -> {
                 if (map.get("sent") == null || map.get("sent").equals("F")) {

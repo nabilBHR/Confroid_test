@@ -87,7 +87,6 @@
         app:icon="@drawable/baseline_get_app_black_24dp"
         app:strokeColor="@color/purple_500"
         app:strokeWidth="3dp" />
-
 </LinearLayout>
 
 

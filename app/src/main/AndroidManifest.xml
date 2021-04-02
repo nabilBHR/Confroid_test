@@ -12,7 +12,7 @@
         <activity android:name=".ui.GetConfigurationActivity"></activity>
         <activity android:name=".ui.ShowTokenActivity" />
         <activity android:name=".ui.DisplayConfigurationActivity" />
-        <activity android:name=".ui.ConfigurationsListActivity" />
+        <activity android:name=".ui.ConfigsList" />
         <activity android:name=".ui.DataShareBaseActivity" />
         <activity android:name=".ui.AddConfigurationActivity" />
         <activity android:name=".ui.MainActivity">
