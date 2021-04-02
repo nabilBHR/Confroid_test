@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +25,6 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
     private ConfigsList cl = new ConfigsList();
     private Context context;
     private List<Map<String, String>> configurationsMaps;
-    //private ArrayList<String> confs = new ArrayList<>();
     private Map<String, String> currentConf;
     private AlertDialog.Builder builder;
 
@@ -33,7 +33,6 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
         this.context = activity.getApplicationContext();
         this.configurationsMaps = configs;
         this.currentConf = currentConf;
-        //this.confs =
     }
 
     @NonNull
@@ -91,7 +90,34 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
             butTag.setOnClickListener(view -> showTagDialog(name));
             butDefault.setOnClickListener(view -> cl.setCurrent(conf));
             butSend.setOnClickListener(view -> cl.sendConfig(conf));
-            //butView.setOnClickListener(view -> editTaskDialog(conf));
+            butView.setOnClickListener(view -> editTaskDialog(conf));
         }
+    }
+
+    private void editTaskDialog(Map<String, String> conf) {
+        builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Modifier configuration");
+        builder.setCancelable(false);
+        LayoutInflater customLayout = LayoutInflater.from(activity);
+        View customLayoutS = customLayout.inflate(R.layout.show_config, null);
+        builder.setView(customLayoutS);
+
+        final EditText nameConf = customLayoutS.findViewById(R.id.nameConfig);
+        final EditText valueConf = customLayoutS.findViewById(R.id.valueConf);
+
+        if (conf != null) {
+            nameConf.setText(String.valueOf(conf.get("configName")));
+            valueConf.setText(String.valueOf(conf.get("value")));
+        }
+
+        builder.setPositiveButton("VALIDER", (dialog, id) -> {
+            Toast.makeText(context, "Modification validée.", Toast.LENGTH_SHORT).show();});
+        builder.setNegativeButton("ANNULER", (dialog, id) -> {
+            Toast.makeText(context, "Modification annulée !", Toast.LENGTH_SHORT).show();
+            dialog.cancel();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
