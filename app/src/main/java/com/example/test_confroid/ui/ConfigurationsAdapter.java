@@ -97,7 +97,6 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
             String tag = et_tag.getText().toString();
             if (!tag.equals("")) {
                 addTagToConfiguration(configName, tag);
-                Log.d("TAGgg", "CN : " + configName + "/TAG : " + tag);
             }
             dialog.dismiss();
         });
