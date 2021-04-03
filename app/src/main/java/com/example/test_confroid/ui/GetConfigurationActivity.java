@@ -1,19 +1,18 @@
 package com.example.test_confroid.ui;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.apg.mobile.roundtextview.RoundTextView;
 import com.example.test_confroid.R;
 
-public class GetConfigurationActivity extends AppCompatActivity {
+public class GetConfigurationActivity extends DataShareBaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_configuration);
 
@@ -22,17 +21,27 @@ public class GetConfigurationActivity extends AppCompatActivity {
         EditText et_conf_version = findViewById(R.id.et_conf_version);
         Button bt_get = findViewById(R.id.bt_get);
 
+        Intent nullIntent = getIntent();
+        if (nullIntent != null && nullIntent.getStringExtra("null_data") != null) {
+            tv_error.setText(getResources().getString(R.string.empty_data));
+            tv_error.setBgColor(getResources().getColor(R.color.red));
+        }
+
         bt_get.setOnClickListener(arg0 -> {
             if (!et_conf_name.getText().toString().equals("")) {
-                if (et_conf_version.getText().toString().equals("")) {
-                    // si l'utilisateur n'a pas saisi de version on récupère la derniere !
+                Intent intent = new Intent("SERVICE_PULLER");
+                intent.putExtra("token", token);
+                intent.putExtra("name", getPackageName() + "." + et_conf_name.getText().toString());
+                intent.putExtra("app_name", getPackageName());
+                intent.putExtra("receiver", "com.example.test_confroid.services.ConfigurationPuller");
+                intent.putExtra("requestId", REQUEST_ID);
 
+                if (!et_conf_version.getText().toString().equals("")) {
+                    intent.putExtra("version", Integer.parseInt(et_conf_version.getText().toString()));
                 }
-                // recuperer la configuration ici
-                // apres la recuperation il faut l'ajouter a la liste des configuration
 
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                intent.setClassName(confroid, servicePuller);
+                ComponentName c = this.startService(intent);
             } else {
                 tv_error.setText(getResources().getString(R.string.empty_config_name));
                 tv_error.setBgColor(getResources().getColor(R.color.red));

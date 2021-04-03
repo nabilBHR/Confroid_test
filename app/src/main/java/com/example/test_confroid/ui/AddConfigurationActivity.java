@@ -25,7 +25,7 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
     private Map<String, String> addedConfigMap = new HashMap<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_configuration);
 

@@ -1,10 +1,12 @@
 package com.example.test_confroid.ui;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,20 +14,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test_confroid.R;
-import com.example.test_confroid.Utils.Utils;
 import com.google.gson.Gson;
 
 import java.util.Map;
 
+import static com.example.test_confroid.Utils.Utils.getJsonString;
+
 public class ConfigurationsListActivity extends DataShareBaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurations_list);
         LinearLayout l_configs_list = findViewById(R.id.l_configs_list);
 
         for (Map<String, String> map : configurationsMaps) {
+
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -53,18 +57,23 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
             l_configs_list.addView(layout);
 
             bt_send_conf.setOnClickListener(arg0 -> {
-                if (map.get("sent") == null || map.get("sent").equals("F")) {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra("intent_type", getResources().getString(R.string.configuration_send_intent_type));
-                    sendIntent.putExtra("app_name", getResources().getString(R.string.app_name));
-                    updateSentField(map.get("configName"), "T");
-                    Bundle config = Utils.convertToBundle(map);
+                if (map.get("sent") == null || !map.get("sent").equals("T")) {
+                    Bundle config = new Bundle();
+                    config.putString("JSON", getJsonString(map));
                     config.putString("TOKEN", token);
+                    config.putString("APP", this.getPackageName());
+                    config.putString("CONF_NAME", map.get("configName"));
+                    //*************************************************
+                    Intent sendIntent = new Intent("SERVICE_PUSHER");
+                    sendIntent.setClassName(confroid, servicePusher);
                     sendIntent.putExtra("CONFIG", config);
-                    sendIntent.setType("text/plain");
-                    Intent shareIntent = Intent.createChooser(sendIntent, null);
-                    startActivityForResult(shareIntent, SEND_CONFIGURATION_CODE);
+                    ComponentName c = this.startService(sendIntent); //start service
+
+                    if (c == null)
+                        Log.e("fail", "failed to start with " + sendIntent);
+                    else
+                        updateSentField(map.get("configName"), "T");
+                        Log.d("send", config.toString());
                 } else {
                     Toast.makeText(this, "Vous avez Déja Envoyé cette configuration ! Elle est déja à jour ! ", Toast.LENGTH_LONG).show();
                 }
