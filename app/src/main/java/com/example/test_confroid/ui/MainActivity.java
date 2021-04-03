@@ -1,13 +1,17 @@
 package com.example.test_confroid.ui;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.apg.mobile.roundtextview.RoundTextView;
 import com.example.test_confroid.R;
+import com.example.test_confroid.services.TokenPuller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -17,6 +21,10 @@ import java.util.HashMap;
 public class MainActivity extends DataShareBaseActivity {
 
     private RoundTextView tv_notification;
+    private Button bt_request_token;
+    private Button bt_create_configuration;
+    private Button bt_display_configurations;
+    private Button bt_pull_configuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +32,27 @@ public class MainActivity extends DataShareBaseActivity {
         setContentView(R.layout.activity_main);
 
         tv_notification = findViewById(R.id.tv_notification);
-        Button bt_request_token = findViewById(R.id.bt_request_token);
-        Button bt_create_configuration = findViewById(R.id.bt_create_configuartion);
-        Button bt_display_configurations = findViewById(R.id.bt_display_configurations);
-        Button bt_get_configuration = findViewById(R.id.bt_get_configuration);
+        bt_request_token = findViewById(R.id.bt_request_token);
+        bt_create_configuration = findViewById(R.id.bt_create_configuartion);
+        bt_display_configurations = findViewById(R.id.bt_display_configurations);
+        bt_pull_configuration = findViewById(R.id.bt_pull_configurations);
 
         Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
+
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        if (prefs != null) {
+        //*****************************************************
+        token = prefs.getString("TOKEN", "");
+        String configurationsStr = prefs.getString("CONFIGS", "");
+        Boolean emptyPref = token.equals("") || configurationsStr.equals("");
+        Log.d("prefs ok", String.valueOf(emptyPref));
+        //*****************************************************
+        if (!emptyPref) {
+            Log.d("PREFERENCE","OKEEEEEEEEEEEEY");
             token = prefs.getString("TOKEN", "");
 
             configurationsMaps = new ArrayList<>();
             configurations = new ArrayList<>();
-            String configurationsStr = prefs.getString("CONFIGS", "");
+            configurationsStr = prefs.getString("CONFIGS", "");
             if (!configurationsStr.equals("")) {
                 String[] configurationsTab = configurationsStr.split("\\|");
                 for (String s : configurationsTab) {
@@ -47,7 +63,14 @@ public class MainActivity extends DataShareBaseActivity {
                     configurations.add(new Gson().toJson(map));
                 }
             }
+         //********* pull a token *******************
+        }else {
+            Log.d("no token", "pulling the token");
+            TokenPuller.pullToken(this.getApplicationContext());
+            Toast.makeText(this, TokenPuller.getToken(), Toast.LENGTH_LONG).show();
+            Log.d("token_main", " " + TokenPuller.getToken());
         }
+        //*******************************************
 
         Intent intentAddConfig = getIntent();
         if (intentAddConfig != null && intentAddConfig.getStringExtra("intent_type") != null) {
@@ -69,14 +92,15 @@ public class MainActivity extends DataShareBaseActivity {
                     startActivity(intent);
                 });
             } else {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra("intent_type", getResources().getString(R.string.token_request_intent_type));
-                sendIntent.putExtra("app_name", getResources().getString(R.string.app_name));
-                sendIntent.putExtra("app_package_name", getApplicationContext().getPackageName());
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivityForResult(shareIntent, REQUEST_TOKEN_CODE);
+                token = TokenPuller.getToken();
+                Log.d("button get token", token);
+
+                prefs = getSharedPreferences("prefs", MODE_PRIVATE); // recupération
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("TOKEN", token);
+                editor.apply();
+                tv_notification.setText(getResources().getString(R.string.token_creation_succes));
+                tv_notification.setTextColor(getResources().getColor(R.color.green));
             }
         });
 
@@ -105,35 +129,22 @@ public class MainActivity extends DataShareBaseActivity {
             }
         });
 
-        bt_get_configuration.setOnClickListener(arg0 -> {
-            Intent intent = new Intent(this, GetConfigurationActivity.class);
-            startActivity(intent);
+        bt_pull_configuration.setOnClickListener(arg0 -> {
+            Intent intent = new Intent("SERVICE_PULLER");
+            intent.putExtra("token", token);
+            intent.putExtra("name", "com.example.test_confroid.me");
+            intent.putExtra("app_name", this.getPackageName());
+            intent.putExtra("receiver", "com.example.test_confroid.services.ConfigurationPuller");
+            //intent.putExtra("version", 1);
+            intent.putExtra("requestId", REQUEST_ID);
+
+            intent.setClassName(confroid, servicePuller);
+
+            ComponentName c = this.startService(intent);
+            if (c == null)
+                Log.e("faillllll", "failed to start with " + intent);
+            else
+                Log.d("senddd", "");
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent tokenRequestResultIntent) {
-        super.onActivityResult(requestCode, resultCode, tokenRequestResultIntent);
-        if (requestCode == REQUEST_TOKEN_CODE) {
-            // On vérifie aussi que l'opération s'est bien déroulée et qu'on a bien recu le token
-            if (resultCode == RESULT_OK) {
-                // on sauvegarde le token dans les shared preferences de l'application
-                token = tokenRequestResultIntent.getStringExtra("TOKEN");
-                prefs = getSharedPreferences("prefs", MODE_PRIVATE); // recupération
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("TOKEN", token);
-                editor.apply();
-                tv_notification.setText(getResources().getString(R.string.token_creation_succes));
-                tv_notification.setBgColor(getResources().getColor(R.color.green));
-            }
-        }
-
-        if (requestCode == SEND_CONFIGURATION_CODE) {
-            if (resultCode == RESULT_OK) {
-                tv_notification.setText(getResources().getString(R.string.configuration_sent_succes));
-                tv_notification.setBgColor(getResources().getColor(R.color.green));
-            }
-        }
-
     }
 }

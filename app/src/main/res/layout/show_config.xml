@@ -14,7 +14,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="champs1" />
+            android:text="Titre configuration" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:background="#aaa"
+                android:background="#ddd"
                 android:enabled="false"
                 android:hint=" "
                 android:inputType="text"
@@ -45,7 +45,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="champs3" />
+            android:text="Valeurs" />
 
         <EditText
             android:id="@+id/valueConf"
@@ -56,6 +56,7 @@
             android:minHeight="100dp"
             android:hint=" "
             android:lines="10"
+            android:enabled="false"
             android:minLines="5"
             android:gravity="top|left"
             android:maxLines="15"

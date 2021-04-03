@@ -12,7 +12,11 @@ import java.util.Map;
 
 public class DataShareBaseActivity extends AppCompatActivity {
 
-    protected static final int REQUEST_TOKEN_CODE = 123;
+    public final static String confroid = "com.example.confroid_project";
+    public final static String servicePusher = "com.example.confroid_project.services.ConfigurationPusher";
+    public final static String servicePuller = "com.example.confroid_project.services.ConfigurationPuller";
+
+    public static final int REQUEST_ID = 123;
     protected final static int SEND_CONFIGURATION_CODE = 124;
     protected static String token;
     protected static SharedPreferences prefs;

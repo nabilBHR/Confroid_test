@@ -18,14 +18,14 @@
         android:id="@+id/tv_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
         android:paddingBottom="8dp"
         android:textColor="#fff"
+        app:bgColor="#fff"
         app:allCorner="16dp"
-        app:bgColor="#fff" />
+        android:layout_marginBottom="25dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_request_token"
@@ -79,14 +79,15 @@
         app:strokeWidth="3dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_get_configuration"
+        android:id="@+id/bt_pull_configurations"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Récuperer une configuration"
-        app:icon="@drawable/baseline_get_app_black_24dp"
+        android:text="Demander une configuration"
+        app:icon="@drawable/baseline_list_black_18dp"
         app:strokeColor="@color/purple_500"
         app:strokeWidth="3dp" />
+
 </LinearLayout>
 
 

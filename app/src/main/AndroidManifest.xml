@@ -9,8 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test_Confroid">
-        <activity android:name=".ui.GetConfigurationActivity"></activity>
+
+        <service
+            android:name=".services.TokenPuller"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="TOKEN_PULL" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".services.ConfigurationPuller"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="PULL_CONF_SERVICE" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".ui.ShowTokenActivity" />
+        <activity android:name=".ui.GetConfigurationActivity" />
         <activity android:name=".ui.DisplayConfigurationActivity" />
         <activity android:name=".ui.ConfigsList" />
         <activity android:name=".ui.DataShareBaseActivity" />
