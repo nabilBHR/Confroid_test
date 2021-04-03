@@ -16,7 +16,6 @@ public class GetConfigurationActivity extends DataShareBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_configuration);
-
         RoundTextView tv_error = findViewById(R.id.tv_error);
         EditText et_conf_name = findViewById(R.id.et_conf_name);
         EditText et_conf_version = findViewById(R.id.et_conf_version);
