@@ -1,10 +1,13 @@
 package com.example.test_confroid.ui;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.apg.mobile.roundtextview.RoundTextView;
 import com.example.test_confroid.R;
@@ -20,7 +23,7 @@ public class MainActivity extends DataShareBaseActivity {
     private RoundTextView tv_notification;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,11 +36,14 @@ public class MainActivity extends DataShareBaseActivity {
         Button bt_show_configuartion = findViewById(R.id.bt_show_configuartion);
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        //*****************************************************
         token = prefs.getString("TOKEN", "");
         String configurationsStr = prefs.getString("CONFIGS", "");
-        boolean emptyPref = token.equals("") || configurationsStr.equals("");
-
+        Boolean emptyPref = token.equals("") || configurationsStr.equals("");
+        Log.d("prefs ok", String.valueOf(emptyPref));
+        //*****************************************************
         if (!emptyPref) {
+            Log.d("PREFERENCE","OKEEEEEEEEEEEEY");
             token = prefs.getString("TOKEN", "");
 
             configurationsMaps = new ArrayList<>();
@@ -55,7 +61,10 @@ public class MainActivity extends DataShareBaseActivity {
             }
          //********* pull a token *******************
         }else {
+            Log.d("no token", "pulling the token");
             TokenPuller.pullToken(this.getApplicationContext());
+            Toast.makeText(this, TokenPuller.getToken(), Toast.LENGTH_LONG).show();
+            Log.d("token_main", " " + TokenPuller.getToken());
         }
         //*******************************************
 
@@ -80,6 +89,7 @@ public class MainActivity extends DataShareBaseActivity {
                 });
             } else {
                 token = TokenPuller.getToken();
+                Log.d("button get token", token);
 
                 prefs = getSharedPreferences("prefs", MODE_PRIVATE); // recupération
                 SharedPreferences.Editor editor = prefs.edit();
@@ -101,7 +111,7 @@ public class MainActivity extends DataShareBaseActivity {
         });
 
         bt_display_configurations.setOnClickListener(arg0 -> {
-            Intent configsList = new Intent(this, ConfigurationsListActivity.class);
+            Intent configsList = new Intent(this, ConfigsList.class);
             startActivity(configsList);
         });
 
@@ -119,5 +129,31 @@ public class MainActivity extends DataShareBaseActivity {
             Intent intent = new Intent(this, GetConfigurationActivity.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent tokenRequestResultIntent) {
+        super.onActivityResult(requestCode, resultCode, tokenRequestResultIntent);
+        if (requestCode == 0) { //REQUEST_TOKEN_CODE
+            // On vérifie aussi que l'opération s'est bien déroulée et qu'on a bien recu le token
+            if (resultCode == RESULT_OK) {
+                // on sauvegarde le token dans les shared preferences de l'application
+                token = tokenRequestResultIntent.getStringExtra("TOKEN");
+                prefs = getSharedPreferences("prefs", MODE_PRIVATE); // recupération
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("TOKEN", token);
+                editor.apply();
+                tv_notification.setText(getResources().getString(R.string.token_creation_succes));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
+        }
+
+        if (requestCode == SEND_CONFIGURATION_CODE) {
+            if (resultCode == RESULT_OK) {
+                tv_notification.setText(getResources().getString(R.string.configuration_sent_succes));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
+        }
+
     }
 }
