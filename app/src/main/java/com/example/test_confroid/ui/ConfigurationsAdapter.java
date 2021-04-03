@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,21 +27,21 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.test_confroid.Utils.Utils.getJsonString;
-import static com.example.test_confroid.ui.DataShareBaseActivity.*;
+import static com.example.test_confroid.ui.DataShareBaseActivity.MODE_PRIVATE;
+import static com.example.test_confroid.ui.DataShareBaseActivity.actualConfigurationMap;
+import static com.example.test_confroid.ui.DataShareBaseActivity.configurations;
+import static com.example.test_confroid.ui.DataShareBaseActivity.configurationsMaps;
+import static com.example.test_confroid.ui.DataShareBaseActivity.prefs;
 
 public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAdapter.ViewHolder> {
     private Activity activity;
     private ConfigsList cl = new ConfigsList();
-    private Context context;
     private List<Map<String, String>> confsMaps;
-    private Map<String, String> currentConf;
     private AlertDialog.Builder builder;
 
-    public ConfigurationsAdapter(Activity activity, List<Map<String, String>> configs, Map<String, String> currentConf) {
+    public ConfigurationsAdapter(Activity activity) {
         this.activity = activity;
-        this.context = activity.getApplicationContext();
-        this.confsMaps = configs;
-        this.currentConf = currentConf;
+        this.confsMaps = configurationsMaps;
     }
 
     @NonNull
@@ -59,6 +58,88 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
     @Override
     public int getItemCount() {
         return confsMaps.size();
+    }
+
+    private void editTaskDialog(Map<String, String> conf) {
+        builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Modifier configuration");
+        builder.setCancelable(false);
+        LayoutInflater customLayout = LayoutInflater.from(activity);
+        View customLayoutS = customLayout.inflate(R.layout.show_config, null);
+        builder.setView(customLayoutS);
+
+        final EditText nameConf = customLayoutS.findViewById(R.id.nameConfig);
+        final EditText valueConf = customLayoutS.findViewById(R.id.valueConf);
+
+        if (conf != null) {
+            nameConf.setText(String.valueOf(conf.get("configName")));
+            StringBuilder value = new StringBuilder();
+            for (Map.Entry<String, String> a : conf.entrySet()) {
+                if (!a.getKey().equals("configName")) {
+                    value.append(a).append("\n");
+                }
+            }
+            valueConf.setText(value.toString());
+        }
+        builder.setNegativeButton("ANNULER", (dialog, id) -> dialog.cancel());
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showTagDialog(String configName) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.set_tag_dialog);
+
+        EditText et_tag = (EditText) dialog.findViewById(R.id.et_tag);
+        Button bt_save_tag = (Button) dialog.findViewById(R.id.bt_save_tag);
+        dialog.show();
+        bt_save_tag.setOnClickListener(arg0 -> {
+            String tag = et_tag.getText().toString();
+            if (!tag.equals("")) {
+                addTagToConfiguration(configName, tag);
+                Log.d("TAGgg", "CN : " + configName + "/TAG : " + tag);
+            }
+            dialog.dismiss();
+        });
+    }
+
+    private void addTagToConfiguration(String configName, String tag) {
+        for (Map<String, String> map : configurationsMaps) {
+            if (map.get("configName").equals(configName)) {
+                int index1 = configurationsMaps.indexOf(map);
+                int index2 = configurations.indexOf(new Gson().toJson(map));
+                map.put("TAG", tag);
+                map.put("sent", "F");
+                configurationsMaps.set(index1, map);
+                configurations.set(index2, new Gson().toJson(map));
+                confsMaps = configurationsMaps;
+                Log.d("TAGgg", "" + configurationsMaps);
+                Log.d("TAGgg", "" + confsMaps);
+                String configListSave = TextUtils.join("|", configurations);
+                if (prefs == null) prefs = activity.getSharedPreferences("prefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("CONFIGS", configListSave);
+                editor.apply();
+            }
+        }
+    }
+
+    // lorsqu'on envoie on met "T" et lorsqu'on modifie on met "F"
+    private void updateSentField(String configName, String TorF) {
+        for (Map<String, String> map : configurationsMaps) {
+            if (map.get("configName").equals(configName)) {
+                int index1 = configurationsMaps.indexOf(map);
+                int index2 = configurations.indexOf(new Gson().toJson(map));
+                map.put("sent", TorF);
+                configurationsMaps.set(index1, map);
+                configurations.set(index2, new Gson().toJson(map));
+                String configListSave = TextUtils.join("|", configurations);
+                if (prefs == null) prefs = activity.getSharedPreferences("prefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("CONFIGS", configListSave);
+                editor.apply();
+            }
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,8 +182,7 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
 
                     if (c == null) {
                         Log.e("failll", "failed to start with " + sendIntent);
-                    }
-                    else{
+                    } else {
                         updateSentField(conf.get("configName"), "T");
                         Log.d("senddd", config.toString());
                     }
@@ -111,87 +191,6 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
                 }
             });
             butView.setOnClickListener(view -> editTaskDialog(conf));
-        }
-    }
-
-    private void editTaskDialog(Map<String, String> conf) {
-        builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Modifier configuration");
-        builder.setCancelable(false);
-        LayoutInflater customLayout = LayoutInflater.from(activity);
-        View customLayoutS = customLayout.inflate(R.layout.show_config, null);
-        builder.setView(customLayoutS);
-
-        final EditText nameConf = customLayoutS.findViewById(R.id.nameConfig);
-        final EditText valueConf = customLayoutS.findViewById(R.id.valueConf);
-
-        if (conf != null) {
-            nameConf.setText(String.valueOf(conf.get("configName")));
-            StringBuilder value = new StringBuilder();
-            for (Map.Entry<String, String> a: conf.entrySet()) {
-                if(!a.getKey().equals("configName")){
-                    value.append(a).append("\n");}
-            }
-            valueConf.setText(value.toString());
-        }
-        builder.setNegativeButton("ANNULER", (dialog, id) -> dialog.cancel());
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    private void showTagDialog(String configName) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.setContentView(R.layout.set_tag_dialog);
-
-        EditText et_tag = (EditText) dialog.findViewById(R.id.et_tag);
-        Button bt_save_tag = (Button) dialog.findViewById(R.id.bt_save_tag);
-        dialog.show();
-        bt_save_tag.setOnClickListener(arg0 -> {
-            String tag = et_tag.getText().toString();
-            if (!tag.equals("")) {
-                addTagToConfiguration(configName, tag);
-                Log.d("TAGgg", "CN : "+configName+"/TAG : "+tag);
-            }
-            dialog.dismiss();
-        });
-    }
-
-    private void addTagToConfiguration(String configName, String tag) {
-        for (Map<String, String> map : configurationsMaps) {
-            if (map.get("configName").equals(configName)) {
-                int index1 = configurationsMaps.indexOf(map);
-                int index2 = configurations.indexOf(new Gson().toJson(map));
-                map.put("TAG", tag);
-                map.put("sent", "F");
-                configurationsMaps.set(index1, map);
-                configurations.set(index2, new Gson().toJson(map));
-                confsMaps = configurationsMaps;
-                Log.d("TAGgg", ""+configurationsMaps);
-                Log.d("TAGgg", ""+confsMaps);
-                String configListSave = TextUtils.join("|", configurations);
-                if (prefs==null) prefs = activity.getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("CONFIGS", configListSave);
-                editor.apply();
-            }
-        }
-    }
-
-    // lorsqu'on envoie on met "T" et lorsqu'on modifie on met "F"
-    private void updateSentField(String configName, String TorF) {
-        for (Map<String, String> map : configurationsMaps) {
-            if (map.get("configName").equals(configName)) {
-                int index1 = configurationsMaps.indexOf(map);
-                int index2 = configurations.indexOf(new Gson().toJson(map));
-                map.put("sent", TorF);
-                configurationsMaps.set(index1, map);
-                configurations.set(index2, new Gson().toJson(map));
-                String configListSave = TextUtils.join("|", configurations);
-                if (prefs==null) prefs = activity.getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("CONFIGS", configListSave);
-                editor.apply();
-            }
         }
     }
 
