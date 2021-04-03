@@ -53,7 +53,7 @@ public class MainActivity extends DataShareBaseActivity {
                     configurations.add(new Gson().toJson(map));
                 }
             }
-         //********* pull a token *******************
+            //********* pull a token *******************
         }else {
             TokenPuller.pullToken(this.getApplicationContext());
         }
@@ -101,7 +101,7 @@ public class MainActivity extends DataShareBaseActivity {
         });
 
         bt_display_configurations.setOnClickListener(arg0 -> {
-            Intent configsList = new Intent(this, ConfigurationsListActivity.class);
+            Intent configsList = new Intent(this, ConfigsList.class);
             startActivity(configsList);
         });
 

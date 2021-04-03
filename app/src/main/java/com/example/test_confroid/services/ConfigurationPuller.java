@@ -27,11 +27,7 @@ public class ConfigurationPuller extends Service {
             String name = intent.getStringExtra("config_name");
 
             if (config==null || name==null){
-//                Intent nullIntent = new Intent(this, GetConfigurationActivity.class);
-//                nullIntent.putExtra("null_data", getResources().getString(R.string.empty_data));
-//                startActivity(nullIntent);
-
-
+                Log.d("error_conf", "configuration inexistante !");
             }else{
                 Map<String,String> addedConfigMap = Utils.jsonToMap(config);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -39,6 +35,7 @@ public class ConfigurationPuller extends Service {
                 }else{
                     addedConfigMap.put("configName",name);
                 }
+                Log.d("success", "configuration recuperer avec succee ");
                 String configuration = new Gson().toJson(addedConfigMap);
                 configurations.add(configuration);
                 String configListSave = TextUtils.join("|", configurations);
