@@ -17,15 +17,15 @@ public class DataShareBaseActivity extends AppCompatActivity {
     public final static String servicePuller = "com.example.confroid_project.services.ConfigurationPuller";
 
     public static final int REQUEST_ID = 123;
-    public final static int SEND_CONFIGURATION_CODE = 124;
-    public static String token;
-    public static SharedPreferences prefs;
-    public static Map<String, String> actualConfigurationMap = new HashMap<>();
-    public static List<String> configurations = new ArrayList<>();
-    public static List<Map<String, String>> configurationsMaps = new ArrayList<>();
+    protected final static int SEND_CONFIGURATION_CODE = 124;
+    protected static String token;
+    protected static SharedPreferences prefs;
+    protected static Map<String, String> actualConfigurationMap = new HashMap<>();
+    protected static List<String> configurations = new ArrayList<>();
+    protected static List<Map<String, String>> configurationsMaps = new ArrayList<>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 }

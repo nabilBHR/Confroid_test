@@ -90,8 +90,8 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.set_tag_dialog);
 
-        EditText et_tag = (EditText) dialog.findViewById(R.id.et_tag);
-        Button bt_save_tag = (Button) dialog.findViewById(R.id.bt_save_tag);
+        EditText et_tag = dialog.findViewById(R.id.et_tag);
+        Button bt_save_tag = dialog.findViewById(R.id.bt_save_tag);
         dialog.show();
         bt_save_tag.setOnClickListener(arg0 -> {
             String tag = et_tag.getText().toString();

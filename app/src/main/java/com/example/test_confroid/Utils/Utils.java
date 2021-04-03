@@ -14,11 +14,12 @@ public class Utils {
         JSONObject json = new JSONObject();
         for (Map.Entry<String, String> entry : configuration.entrySet()) {
             try {
-                if (!entry.getKey().equals("configName") || !entry.getKey().equals("sent"))
-                    json.put(entry.getKey(), entry.getValue());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (!entry.getKey().equals("configName")) {
+                    if (!entry.getKey().equals("sent")) json.put(entry.getKey(), entry.getValue());
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         return json.toString();
     }
