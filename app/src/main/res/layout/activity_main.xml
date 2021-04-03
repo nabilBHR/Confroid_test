@@ -79,7 +79,7 @@
         app:strokeWidth="3dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_pull_configurations"
+        android:id="@+id/bt_get_configurations"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

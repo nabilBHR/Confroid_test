@@ -12,10 +12,11 @@ public class ConfigurationPuller extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int requestId = intent.getIntExtra("requestId", 0);
-        if (requestId == DataShareBaseActivity.REQUEST_ID) {
+        if (requestId == DataShareBaseActivity.REQUEST_ID){
             String config = intent.getStringExtra("content");
-            Log.d("received config", config);
-        } else {
+            String name = intent.getStringExtra("config_name");
+            Log.d("received config",config+" "+name);
+        }else {
             Log.e("received config", "error");
         }
         return START_NOT_STICKY;
@@ -23,7 +24,6 @@ public class ConfigurationPuller extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 }
