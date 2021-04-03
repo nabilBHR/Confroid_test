@@ -23,7 +23,7 @@ import static com.example.test_confroid.Utils.Utils.getJsonString;
 public class ConfigurationsListActivity extends DataShareBaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurations_list);
         LinearLayout l_configs_list = findViewById(R.id.l_configs_list);
@@ -70,10 +70,10 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
                     ComponentName c = this.startService(sendIntent); //start service
 
                     if (c == null)
-                        Log.e("failll", "failed to start with " + sendIntent);
+                        Log.e("fail", "failed to start with " + sendIntent);
                     else
                         updateSentField(map.get("configName"), "T");
-                        Log.d("senddd", config.toString());
+                        Log.d("send", config.toString());
                 } else {
                     Toast.makeText(this, "Vous avez Déja Envoyé cette configuration ! Elle est déja à jour ! ", Toast.LENGTH_LONG).show();
                 }
@@ -118,7 +118,7 @@ public class ConfigurationsListActivity extends DataShareBaseActivity {
                 int index1 = configurationsMaps.indexOf(map);
                 int index2 = configurations.indexOf(new Gson().toJson(map));
                 map.put("TAG", tag);
-                //map.put("sent", "F"); // pour pouvoir l'envoyer de nouveau car elle est modifiée !
+                map.put("sent", "F"); // pour pouvoir l'envoyer de nouveau car elle est modifiée !
                 configurationsMaps.set(index1, map);
                 configurations.set(index2, new Gson().toJson(map));
 

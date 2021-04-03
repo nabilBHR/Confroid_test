@@ -1,34 +1,29 @@
 package com.example.test_confroid.Utils;
 
-import android.os.Bundle;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Utils {
-
-    public static Bundle convertToBundle(Map<String, String> configuration) {
-        Bundle bundle = new Bundle();
-        for (Map.Entry<String, String> entry : configuration.entrySet()) {
-            bundle.putString(entry.getKey(), entry.getValue());
-        }
-        return bundle;
-    }
 
     public static String getJsonString(Map<String, String> configuration) {
         JSONObject json = new JSONObject();
         for (Map.Entry<String, String> entry : configuration.entrySet()) {
             try {
-                if (!entry.getKey().equals("configName"))
+                if (!entry.getKey().equals("configName") || !entry.getKey().equals("sent"))
                     json.put(entry.getKey(), entry.getValue());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
         }
-
-
         return json.toString();
+    }
+
+    public static Map<String,String> jsonToMap(String json){
+        return new Gson().fromJson(json, HashMap.class);
     }
 }
