@@ -167,7 +167,7 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
                 Toast.makeText(activity, "Définie comme configuration actuelle !", Toast.LENGTH_LONG).show();
             });
             butSend.setOnClickListener(view -> {
-                if (conf.get("TAG") == null || !conf.get("sent").equals("T")) {
+                if (conf.get("sent") == null || !conf.get("sent").equals("T")) {
                     Bundle config = new Bundle();
                     config.putString("JSON", getJsonString(conf));
                     config.putString("TOKEN", DataShareBaseActivity.token);

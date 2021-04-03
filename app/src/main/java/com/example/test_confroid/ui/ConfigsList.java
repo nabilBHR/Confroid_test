@@ -20,7 +20,7 @@ public class ConfigsList extends DataShareBaseActivity {
     private TextView ifEmpty;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurations_list);
         ifEmpty = findViewById(R.id.empty);
