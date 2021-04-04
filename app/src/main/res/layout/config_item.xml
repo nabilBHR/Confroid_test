@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="7dp"
     android:layout_marginStart="10dp"
+    android:layout_marginTop="7dp"
     android:layout_marginEnd="10dp"
     android:background="#f3ecfe"
     android:orientation="vertical"
@@ -16,73 +16,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
         android:baselineAligned="false"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TableRow
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_marginVertical="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/configurationTitle"
-                android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textAlignment="center"
                 android:layout_gravity="center"
+                android:text=""
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
         </TableRow>
-        <TableRow
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:gravity="center">
-            <Button
-                android:id="@+id/butTag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/purple_500"
-                android:layout_marginHorizontal="10dp"
-                android:gravity="center"
-                android:text="TAG"
-                android:textColor="#FFF" />
-            <Button
-                android:id="@+id/butDefault"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/purple_500"
-                android:layout_marginHorizontal="10dp"
-                android:gravity="center"
-                android:text="Definir"
-                android:textColor="#FFF" />
 
-        </TableRow>
         <TableRow
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center">
-            <Button
-                android:id="@+id/butSend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/purple_500"
-                android:layout_marginHorizontal="10dp"
-                android:gravity="center"
-                android:text="Envoyer"
-                android:textColor="#FFF" />
+
             <Button
                 android:id="@+id/butView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/purple_500"
                 android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/purple_500"
                 android:gravity="center"
                 android:text="aperçu"
                 android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/butTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/purple_500"
+                android:gravity="center"
+                android:text="TAG"
+                android:textColor="#FFF" />
+
         </TableRow>
     </TableLayout>
 </LinearLayout>

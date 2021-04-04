@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="25dp"
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/bt_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:backgroundTint="@color/purple_500"
+                android:gravity="center"
+                android:text="definir"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/bt_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:backgroundTint="@color/purple_500"
+                android:gravity="center"
+                android:text="envoyer"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/bt_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:backgroundTint="@color/purple_500"
+                android:gravity="center"
+                android:text="supprimer"
+                android:textColor="#FFF" />
+
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Titre de la configuration" />
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/nameConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#f3ecfe"
+        android:enabled="false"
+        android:hint=" "
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="12dp"
+        android:textColor="#000"
+        android:textColorHint="#333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contenu" />
+
+    <EditText
+        android:id="@+id/valueConf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#f3ecfe"
+        android:enabled="false"
+        android:gravity="top|start"
+        android:hint=" "
+        android:lines="10"
+        android:maxLines="15"
+        android:minHeight="100dp"
+        android:minLines="5"
+        android:padding="12dp"
+        android:textColor="#000"
+        android:textColorHint="#333"
+        android:textSize="15sp" />
+
+</LinearLayout>

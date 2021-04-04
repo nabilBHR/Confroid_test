@@ -24,7 +24,7 @@ public class Utils {
         return json.toString();
     }
 
-    public static Map<String,String> jsonToMap(String json){
+    public static Map<String, String> jsonToMap(String json) {
         return new Gson().fromJson(json, HashMap.class);
     }
 }

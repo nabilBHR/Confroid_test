@@ -1,6 +1,5 @@
 package com.example.test_confroid.ui;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,11 +9,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test_confroid.R;
-import com.google.gson.Gson;
+import com.example.test_confroid.adapters.ConfigurationsAdapter;
 
-import java.util.Map;
-
-public class ConfigsList extends DataShareBaseActivity {
+public class ConfigurationsListActivity extends DataShareBaseActivity {
     private RecyclerView recyclerView;
     private ConfigurationsAdapter confAdapter;
     private TextView ifEmpty;
@@ -35,7 +32,7 @@ public class ConfigsList extends DataShareBaseActivity {
         recyclerView.setLayoutManager(createLM());
 
         if (confAdapter.getItemCount() != 0) {
-            Log.d("onResume", ""+confAdapter.getItemCount());
+            Log.d("onResume", "" + confAdapter.getItemCount());
             ifEmpty.setVisibility(View.INVISIBLE);
         }
     }
@@ -44,15 +41,6 @@ public class ConfigsList extends DataShareBaseActivity {
         int span = 1;
         int orientation = RecyclerView.VERTICAL;
         return new GridLayoutManager(this, span, orientation, false);
-    }
-
-    public void setCurrent(Map<String, String> map) {
-        actualConfigurationMap = map;
-        if (prefs == null) prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        String configurationSave = new Gson().toJson(actualConfigurationMap);
-        editor.putString("actualConfig", configurationSave);
-        editor.apply();
     }
 
 }

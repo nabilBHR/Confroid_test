@@ -10,5 +10,8 @@
     <string name="configuration_sent_succes">Votre configuration a été envoyée à Confroid !</string>
     <string name="show_token_message">Votre token est : </string>
     <string name="add_configuration_result_intent">add_configuration</string>
-    <string name="empty_data">cette configuration n existe pas</string>
+    <string name="empty_data">cette configuration n\'existe pas</string>
+    <string name="configuration_pull_succes">Votre configuration a été récupérée depuis Confroid !</string>
+    <string name="configuration_pull_succes2">La configuration locale a été mise a jour !</string>
+
 </resources>

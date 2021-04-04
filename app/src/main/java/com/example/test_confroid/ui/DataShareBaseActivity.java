@@ -18,6 +18,7 @@ public class DataShareBaseActivity extends AppCompatActivity {
 
     public static final int REQUEST_ID = 123;
     public final static int SEND_CONFIGURATION_CODE = 124;
+    public final static String notification = "";
     public static String token;
     public static SharedPreferences prefs;
     public static Map<String, String> actualConfigurationMap = new HashMap<>();
@@ -25,7 +26,7 @@ public class DataShareBaseActivity extends AppCompatActivity {
     public static List<Map<String, String>> configurationsMaps = new ArrayList<>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 }
