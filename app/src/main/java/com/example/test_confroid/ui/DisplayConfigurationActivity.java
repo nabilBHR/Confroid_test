@@ -90,6 +90,8 @@ public class DisplayConfigurationActivity extends DataShareBaseActivity {
             TextView empty = new TextView(this);
             empty.setText("Vous n'avez pas encore défini de configuration par defaut !");
             empty.setLayoutParams(params);
+            empty.setTextColor(Color.parseColor("#FF0000"));
+            empty.setGravity(Gravity.CENTER);
             mainlayout.addView(empty);
         }
 

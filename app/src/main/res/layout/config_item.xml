@@ -36,6 +36,16 @@
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
+            <Button
+                android:id="@+id/bt_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/purple_500"
+                android:layout_marginHorizontal="10dp"
+                android:gravity="center"
+                android:text="supprimer"
+                android:textColor="#FFF" />
+
         </TableRow>
         <TableRow
             android:layout_height="wrap_content"

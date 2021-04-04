@@ -35,7 +35,7 @@ public class ConfigsList extends DataShareBaseActivity {
         recyclerView.setLayoutManager(createLM());
 
         if (confAdapter.getItemCount() != 0) {
-            Log.d("onResume", ""+confAdapter.getItemCount());
+            Log.d("onResume", "" + confAdapter.getItemCount());
             ifEmpty.setVisibility(View.INVISIBLE);
         }
     }

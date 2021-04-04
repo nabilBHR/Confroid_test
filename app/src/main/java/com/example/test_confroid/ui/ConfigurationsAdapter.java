@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import java.util.Map;
 
 import static com.example.test_confroid.Utils.Utils.getJsonString;
 import static com.example.test_confroid.ui.DataShareBaseActivity.MODE_PRIVATE;
-import static com.example.test_confroid.ui.DataShareBaseActivity.actualConfigurationMap;
 import static com.example.test_confroid.ui.DataShareBaseActivity.configurations;
 import static com.example.test_confroid.ui.DataShareBaseActivity.configurationsMaps;
 import static com.example.test_confroid.ui.DataShareBaseActivity.prefs;
@@ -38,10 +38,12 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
     private ConfigsList cl = new ConfigsList();
     private List<Map<String, String>> confsMaps;
     private AlertDialog.Builder builder;
+    private ConfigurationsAdapter adpt;
 
     public ConfigurationsAdapter(Activity activity) {
         this.activity = activity;
         this.confsMaps = configurationsMaps;
+        adpt = this;
     }
 
     @NonNull
@@ -147,6 +149,7 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
         private Button butDefault;
         private Button butSend;
         private Button butView;
+        private Button butDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -155,6 +158,7 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
             butDefault = itemView.findViewById(R.id.butDefault);
             butSend = itemView.findViewById(R.id.butSend);
             butView = itemView.findViewById(R.id.butView);
+            butDelete = itemView.findViewById(R.id.bt_delete);
         }
 
         public void update(Map<String, String> conf) {
@@ -180,16 +184,31 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
                     ComponentName c = activity.startService(sendIntent); //start service
 
                     if (c == null) {
-                        Log.e("failll", "failed to start with " + sendIntent);
+                        Log.e("fail", "failed to start with " + sendIntent);
                     } else {
                         updateSentField(conf.get("configName"), "T");
-                        Log.d("senddd", config.toString());
+                        Log.d("send", config.toString());
                     }
                 } else {
                     Toast.makeText(activity, "Vous avez Déja Envoyé cette configuration ! Elle est déja à jour ! ", Toast.LENGTH_LONG).show();
                 }
             });
             butView.setOnClickListener(view -> editTaskDialog(conf));
+
+            butDelete.setOnClickListener(view -> {
+                String configuration = new Gson().toJson(conf);
+                configurations.remove(configuration);
+                String configListSave = TextUtils.join("|", configurations);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("CONFIGS", configListSave);
+                editor.apply();
+                adpt.notifyDataSetChanged();
+                MainActivity.init();
+                MainActivity.notif = "Configuration supprimée !";
+                MainActivity.notifColor = "red";
+                Intent backToMain = new Intent(activity, MainActivity.class);
+                activity.startActivity(backToMain);
+            });
         }
     }
 

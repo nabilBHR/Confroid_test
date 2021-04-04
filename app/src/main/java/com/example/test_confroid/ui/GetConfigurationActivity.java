@@ -1,6 +1,5 @@
 package com.example.test_confroid.ui;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,6 +7,7 @@ import android.widget.EditText;
 
 import com.apg.mobile.roundtextview.RoundTextView;
 import com.example.test_confroid.R;
+import com.example.test_confroid.services.ConfigurationPuller;
 
 public class GetConfigurationActivity extends DataShareBaseActivity {
 
@@ -41,7 +41,16 @@ public class GetConfigurationActivity extends DataShareBaseActivity {
                 }
 
                 intent.setClassName(confroid, servicePuller);
-                ComponentName c = this.startService(intent);
+                this.startService(intent);
+
+                if (!ConfigurationPuller.isRunning()) {
+                    MainActivity.notif = "Le service de récupération de configuration a été arrêté par Android";
+                    MainActivity.notifColor = "red";
+                }
+
+                Intent backToMain = new Intent(this, MainActivity.class);
+                startActivity(backToMain);
+
             } else {
                 tv_error.setText(getResources().getString(R.string.empty_config_name));
                 tv_error.setBgColor(getResources().getColor(R.color.red));

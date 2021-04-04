@@ -17,6 +17,8 @@ import java.util.HashMap;
 
 public class MainActivity extends DataShareBaseActivity {
 
+    public static String notif = "";
+    public static String notifColor = "";
     private RoundTextView tv_notification;
 
     @Override
@@ -54,11 +56,19 @@ public class MainActivity extends DataShareBaseActivity {
                 }
             }
             //********* pull a token *******************
-        }else {
+        } else {
             TokenPuller.pullToken(this.getApplicationContext());
         }
         //*******************************************
 
+        if (!notif.equals("")) {
+            tv_notification.setText(notif);
+            if (notifColor.equals("red")) {
+                tv_notification.setBgColor(getResources().getColor(R.color.red));
+            } else {
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
+            }
+        }
         Intent intentAddConfig = getIntent();
         if (intentAddConfig != null && intentAddConfig.getStringExtra("intent_type") != null) {
             if (intentAddConfig.getStringExtra("intent_type").equals(getResources().getString(R.string.add_configuration_result_intent))) {
@@ -80,13 +90,12 @@ public class MainActivity extends DataShareBaseActivity {
                 });
             } else {
                 token = TokenPuller.getToken();
-
                 prefs = getSharedPreferences("prefs", MODE_PRIVATE); // recupération
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("TOKEN", token);
                 editor.apply();
                 tv_notification.setText(getResources().getString(R.string.token_creation_succes));
-                tv_notification.setTextColor(getResources().getColor(R.color.green));
+                tv_notification.setBgColor(getResources().getColor(R.color.green));
             }
         });
 
@@ -119,5 +128,21 @@ public class MainActivity extends DataShareBaseActivity {
             Intent intent = new Intent(this, GetConfigurationActivity.class);
             startActivity(intent);
         });
+    }
+
+    public static void init(){
+        configurationsMaps = new ArrayList<>();
+        configurations = new ArrayList<>();
+        String configurationsStr = prefs.getString("CONFIGS", "");
+        if (!configurationsStr.equals("")) {
+            String[] configurationsTab = configurationsStr.split("\\|");
+            for (String s : configurationsTab) {
+                java.lang.reflect.Type type = new TypeToken<HashMap<String, String>>() {
+                }.getType();
+                HashMap<String, String> map = new Gson().fromJson(s, type);
+                configurationsMaps.add(map);
+                configurations.add(new Gson().toJson(map));
+            }
+        }
     }
 }
