@@ -1,6 +1,5 @@
 package com.example.test_confroid.Utils;
 
-import com.example.test_confroid.ui.DataShareBaseActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -25,7 +24,7 @@ public class Utils {
         return json.toString();
     }
 
-    public static Map<String,String> jsonToMap(String json){
+    public static Map<String, String> jsonToMap(String json) {
         return new Gson().fromJson(json, HashMap.class);
     }
 }

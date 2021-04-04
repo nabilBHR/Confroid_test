@@ -21,6 +21,22 @@ public class MainActivity extends DataShareBaseActivity {
     public static String notifColor = "";
     private RoundTextView tv_notification;
 
+    public static void init() {
+        configurationsMaps = new ArrayList<>();
+        configurations = new ArrayList<>();
+        String configurationsStr = prefs.getString("CONFIGS", "");
+        if (!configurationsStr.equals("")) {
+            String[] configurationsTab = configurationsStr.split("\\|");
+            for (String s : configurationsTab) {
+                java.lang.reflect.Type type = new TypeToken<HashMap<String, String>>() {
+                }.getType();
+                HashMap<String, String> map = new Gson().fromJson(s, type);
+                configurationsMaps.add(map);
+                configurations.add(new Gson().toJson(map));
+            }
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +71,9 @@ public class MainActivity extends DataShareBaseActivity {
                     configurations.add(new Gson().toJson(map));
                 }
             }
-            //********* pull a token *******************
         } else {
             TokenPuller.pullToken(this.getApplicationContext());
         }
-        //*******************************************
 
         if (!notif.equals("")) {
             tv_notification.setText(notif);
@@ -110,7 +124,7 @@ public class MainActivity extends DataShareBaseActivity {
         });
 
         bt_display_configurations.setOnClickListener(arg0 -> {
-            Intent configsList = new Intent(this, ConfigsList.class);
+            Intent configsList = new Intent(this, ConfigurationsListActivity.class);
             startActivity(configsList);
         });
 
@@ -119,7 +133,7 @@ public class MainActivity extends DataShareBaseActivity {
                 tv_notification.setText(getResources().getString(R.string.dont_have_token_yet));
                 tv_notification.setBgColor(getResources().getColor(R.color.red));
             } else {
-                Intent showActualConfig = new Intent(this, DisplayConfigurationActivity.class);
+                Intent showActualConfig = new Intent(this, DisplayActualConfigurationActivity.class);
                 startActivity(showActualConfig);
             }
         });
@@ -128,21 +142,5 @@ public class MainActivity extends DataShareBaseActivity {
             Intent intent = new Intent(this, GetConfigurationActivity.class);
             startActivity(intent);
         });
-    }
-
-    public static void init(){
-        configurationsMaps = new ArrayList<>();
-        configurations = new ArrayList<>();
-        String configurationsStr = prefs.getString("CONFIGS", "");
-        if (!configurationsStr.equals("")) {
-            String[] configurationsTab = configurationsStr.split("\\|");
-            for (String s : configurationsTab) {
-                java.lang.reflect.Type type = new TypeToken<HashMap<String, String>>() {
-                }.getType();
-                HashMap<String, String> map = new Gson().fromJson(s, type);
-                configurationsMaps.add(map);
-                configurations.add(new Gson().toJson(map));
-            }
-        }
     }
 }

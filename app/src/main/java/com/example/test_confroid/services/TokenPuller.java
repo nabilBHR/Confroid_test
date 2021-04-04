@@ -8,8 +8,6 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 public class TokenPuller extends Service {
-    public static final String PACKAGE_NAME = "com.example.confroid_project";
-    public static final String TOKEN_DISPENSER = "com.example.confroid_project.receivers.TokenDispenser";
     private static String Token = "";
 
     public static void pullToken(Context context) {

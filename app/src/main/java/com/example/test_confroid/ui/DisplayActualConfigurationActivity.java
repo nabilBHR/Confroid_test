@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DisplayConfigurationActivity extends DataShareBaseActivity {
+public class DisplayActualConfigurationActivity extends DataShareBaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -27,39 +27,42 @@ public class ConfigurationPuller extends Service {
 
     private static boolean isRunning;
 
+    public static boolean isRunning() {
+        return isRunning;
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         isRunning = true;
         int requestId = intent.getIntExtra("requestId", 0);
-        if (requestId == REQUEST_ID){
+        if (requestId == REQUEST_ID) {
             String config = intent.getStringExtra("content");
             String name = intent.getStringExtra("config_name");
 
-            if (config==null || name==null){
+            if (config == null || name == null) {
                 Log.d("error_conf", "configuration inexistante !");
                 notif = getResources().getString(R.string.empty_data);
                 notifColor = "red";
-            }else{
-                Map<String,String> addedConfigMap = Utils.jsonToMap(config);
+            } else {
+                Map<String, String> addedConfigMap = Utils.jsonToMap(config);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    addedConfigMap.putIfAbsent("configName",name);
-                }else{
-                    addedConfigMap.put("configName",name);
+                    addedConfigMap.putIfAbsent("configName", name);
+                } else {
+                    addedConfigMap.put("configName", name);
                 }
                 Log.d("configuration pull", "successfully pulled");
 
-                if (isConfigutationInLocalStorage(addedConfigMap)){
+                if (isConfigutationInLocalStorage(addedConfigMap)) {
                     replaceLocalMap(addedConfigMap);
                     configurations = new ArrayList<>();
                     String convertedConf = "";
-                    for (Map<String, String> map : configurationsMaps){
+                    for (Map<String, String> map : configurationsMaps) {
                         convertedConf = new Gson().toJson(map);
                         configurations.add(convertedConf);
                     }
                     notif = getResources().getString(R.string.configuration_pull_succes2);
                     notifColor = "green";
-                }
-                else {
+                } else {
                     String newPulledConf = new Gson().toJson(addedConfigMap);
                     configurations.add(newPulledConf);
                     notif = getResources().getString(R.string.configuration_pull_succes);
@@ -73,7 +76,7 @@ public class ConfigurationPuller extends Service {
                 editor.apply();
 
             }
-        }else {
+        } else {
             Log.e("received config", "error");
         }
         return START_NOT_STICKY;
@@ -88,31 +91,27 @@ public class ConfigurationPuller extends Service {
         isRunning = false;
     }
 
-    public static boolean isRunning() {
-        return isRunning;
+    public static int getIndexByName(String name) {
+        for (Map<String, String> localMap : DataShareBaseActivity.configurationsMaps) {
+            if (localMap.get("configName").equals(name)) {
+                return configurationsMaps.indexOf(localMap);
+            }
+        }
+        return -1;
     }
 
-    private boolean isConfigutationInLocalStorage(Map<String, String> map){
-        for(Map<String, String> localMap : DataShareBaseActivity.configurationsMaps){
-            if (localMap.get("configName").equals(map.get("configName"))){
+    private boolean isConfigutationInLocalStorage(Map<String, String> map) {
+        for (Map<String, String> localMap : DataShareBaseActivity.configurationsMaps) {
+            if (localMap.get("configName").equals(map.get("configName"))) {
                 return true;
             }
         }
         return false;
     }
 
-    private void replaceLocalMap(Map<String, String> map){
+    private void replaceLocalMap(Map<String, String> map) {
         configurationsMaps.remove(getIndexByName(map.get("configName")));
         configurationsMaps.add(map);
     }
 
-    private int getIndexByName(String name){
-        for(Map<String, String> localMap : DataShareBaseActivity.configurationsMaps){
-            if (localMap.get("configName").equals(name)) {
-                int index = configurationsMaps.indexOf(localMap);
-                return configurationsMaps.indexOf(localMap);
-            }
-        }
-        return -1;
-    }
 }

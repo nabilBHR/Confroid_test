@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class AddConfigurationActivity extends DataShareBaseActivity {
 
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private int line = 0;
     private EditText et_last_key = null;
     private EditText et_last_value = null;
@@ -73,7 +74,7 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
     private void addNewLine() {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setLayoutParams(params);
         EditText et_key = new EditText(this);
         EditText et_value = new EditText(this);
         et_last_key = et_key;
@@ -82,7 +83,7 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
         et_key.setHintTextColor(getResources().getColor(R.color.green));
         et_value.setHint("Valeur ");
         et_value.setHintTextColor(getResources().getColor(R.color.green));
-        et_key.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        et_key.setLayoutParams(params);
         et_value.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         layout.addView(et_key);
         layout.addView(et_value);
@@ -94,15 +95,15 @@ public class AddConfigurationActivity extends DataShareBaseActivity {
         et_last_key.setEnabled(false);
         et_last_value.setEnabled(false);
         LinearLayout layout = new LinearLayout(this);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setLayoutParams(params);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         et_config_name = new EditText(this);
         et_config_name.setHint("Nom de la configuration");
         et_config_name.setHintTextColor(getResources().getColor(R.color.green));
-        et_config_name.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        et_config_name.setLayoutParams(params);
         bt_save = new Button(this);
         bt_save.setText("Enregistrer");
-        bt_save.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        bt_save.setLayoutParams(params);
         layout.addView(et_config_name);
         layout.addView(bt_save);
         l_add_config.addView(layout);
