@@ -15,7 +15,8 @@ public class ShowTokenActivity extends DataShareBaseActivity {
         setContentView(R.layout.activity_show_token);
 
         TextView tv_token = findViewById(R.id.tv_token);
-        tv_token.setText(token);
+        String[] newToken = token.split("\\.");
+        tv_token.setText(newToken[newToken.length-1]);
         Button bt_back_main = findViewById(R.id.bt_back_main);
         bt_back_main.setOnClickListener(arg0 -> {
             Intent intent = new Intent(this, MainActivity.class);
