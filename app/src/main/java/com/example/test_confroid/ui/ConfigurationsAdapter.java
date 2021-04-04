@@ -62,7 +62,7 @@ public class ConfigurationsAdapter extends RecyclerView.Adapter<ConfigurationsAd
 
     private void editTaskDialog(Map<String, String> conf) {
         builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Modifier configuration");
+        builder.setTitle("Details de la configuration");
         builder.setCancelable(false);
         LayoutInflater customLayout = LayoutInflater.from(activity);
         View customLayoutS = customLayout.inflate(R.layout.show_config, null);

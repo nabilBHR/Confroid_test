@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Informations sur mon Token"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginVertical="25dp"
+        android:layout_marginHorizontal="15dp"
         android:stretchColumns="*">
 
         <TableRow
@@ -31,11 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:background="#D3D3D3"
+                android:background="#ececec"
                 android:padding="18dip"
                 android:text="Token"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,10 +43,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:background="#F0F8FF"
+                android:background="#f3ecfe"
                 android:padding="18dip"
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </TableRow>
 
         <TableRow
@@ -58,22 +58,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:background="#D3D3D3"
+                android:background="#ececec"
                 android:padding="18dip"
                 android:text="Délivré par :"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:background="#F0F8FF"
+                android:background="#f3ecfe"
                 android:padding="18dip"
                 android:text="Confroid"
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </TableRow>
 
         <TableRow
@@ -85,22 +85,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:background="#D3D3D3"
+                android:background="#ececec"
                 android:padding="18dip"
                 android:text="Pour :"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:background="#F0F8FF"
+                android:background="#f3ecfe"
                 android:padding="18dip"
                 android:text="Confroid_test"
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </TableRow>
 
         <TableRow
@@ -111,22 +111,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:background="#D3D3D3"
+                android:background="#ececec"
                 android:padding="18dip"
                 android:text="Status :"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:background="#F0F8FF"
+                android:background="#f3ecfe"
                 android:padding="18dip"
                 android:text="Valable"
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </TableRow>
     </TableLayout>
 

@@ -3,29 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/l_add_config"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/bt_add_value"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="10dp"
                 android:text="Ajouter une valeur" />
 
             <Button
                 android:id="@+id/bt_validate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:text="Valider" />
 
         </LinearLayout>
